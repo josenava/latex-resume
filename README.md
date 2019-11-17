@@ -1,3 +1,9 @@
+# Disclaimer
+This is my fork to adapt it to my CV, please follow opensorceror project and support him :)
+
+# How to compile
+Install `latexmk` and run `latexmk -xelatex template.tex`
+
 # LaTeX resume template
 
 This is the template I use for my own resume. I've compiled it with elements from several templates, including:

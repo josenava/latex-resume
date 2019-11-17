@@ -13,7 +13,7 @@
 
 \usepackage{pstricks}
 
-\usepackage{fontawesome}
+\usepackage{fontawesome5}
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
 \RequirePackage[absolute,overlay]{textpos}
@@ -34,7 +34,7 @@
     pdfauthor={},
     pdfsubject={},
     pdfkeywords={},
-    colorlinks=false,           % no lik border color
+    colorlinks=false,           % no link border color
     allbordercolors=white       % white border color for all
 }
 
@@ -152,10 +152,10 @@
 \newcommand*\icon[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt, fill=mainblue,mainblue,text=white] (char) {#1};}}
 
 % Command for printing skill progress bars
-\newcommand\programming[1]{ 
-	\renewcommand{\programming}{
+\newcommand\skillsbar[1]{ 
+	\renewcommand{\skillsbar}{
 		\begin{tikzpicture}
-        	\node [above right] at (0, 4) {$0 \: LOC \: \arrow{3.2} \: 5000 \: LOC$};
+        	%\node [above right] at (0, 4) {$0 \: LOC \: \arrow{3.2} \: 5000 \: LOC$};
 			\foreach [count=\i] \x/\y in {#1}{
 				\draw[fill=maingray,maingray] (0,\i) rectangle (6,\i+0.4);
 				\draw[fill=white,mainblue](0,\i) rectangle (\y,\i+0.4);
@@ -164,8 +164,23 @@
 		\end{tikzpicture}
 	}
 }
-\newcommand\education[1]{ 
-	\renewcommand{\education}{
+
+% needs to be refactored
+\newcommand\programming[1]{
+	\renewcommand{\programming}{
+		\begin{tikzpicture}
+        	%\node [above right] at (0, 4) {$0 \: LOC \: \arrow{3.2} \: 5000 \: LOC$};
+			\foreach [count=\i] \x/\y in {#1}{
+				\draw[fill=maingray,maingray] (0,\i) rectangle (6,\i+0.4);
+				\draw[fill=white,mainblue](0,\i) rectangle (\y,\i+0.4);
+				\node [above right] at (0,\i+0.35) {\x};
+			}
+		\end{tikzpicture}
+	}
+}
+
+\newcommand\projects[1]{
+	\renewcommand{\projects}{
 		{#1}
 	}
 }
@@ -198,54 +213,44 @@
     
     \vspace{3mm}
     \renewcommand{\arraystretch}{2}
-    \begin{tabular}{p{1cm} @{\hskip 0.5cm}p{5cm}}
+    \begin{tabular}{p{0.5cm} @{\hskip 0.5cm}p{5cm}}
       \ifthenelse{\equal{\cvnumberphone}{}}{}{
       		{$
               \begin{array}{l}
-              \hspace{4mm} \Huge \textnormal{\faMobile} 
+              \hspace{4mm} \textnormal{\faMobile}
               \end{array}
-              $} 
+              $}
             & \cvnumberphone\\}
-            
-      \ifthenelse{\equal{\cvsite}{}}{}{
-            {$
-              \begin{array}{l}
-              \hspace{2.8mm} \huge \textnormal{\textcolor{test}{\faGlobe}}
-              \end{array}
-              $} 
-            & \href{http://\cvsite}{\cvsite} \\}
       \ifthenelse{\equal{\cvmail}{}}{}{
             {$
               \begin{array}{l}
-              \hspace{2.5mm} \huge \textnormal{\textcolor{yt}{\faEnvelopeO}}
+              \hspace{2.5mm} \textnormal{\textcolor{yt}{\faEnvelope}}
               \end{array}
-              $} 
+              $}
             & \href{mailto:\cvmail}{\cvmail} \\}
-      
        \ifthenelse{\equal{\cvlinkedin}{}}{}{
             {$
               \begin{array}{l}
-              \hspace{3mm} \huge \textnormal{\textcolor{linkedin}{\faLinkedin}}
+              \hspace{3mm} \textnormal{\textcolor{linkedin}{\faLinkedin}}
               \end{array}
-              $} & \href{https://www.linkedin.com\cvlinkedin}{\cvlinkedin} \\
-            }  
+              $} & \href{https://www.linkedin.com/in/\cvlinkedin}{\cvlinkedin} \\
+            }
         \ifthenelse{\equal{\cvgithub}{}}{}{
             {$
               \begin{array}{l}
-              \hspace{3mm} \huge \textnormal{\faGithub}
+              \hspace{3mm} \textnormal{\faGithub}
               \end{array}
               $} & \href{https://www.github.com/\cvgithub}{\cvgithub} \\
-            }   
-            
+            }
     \end{tabular}
 
     %------------------------------------------------
-    \vspace{3mm}
-    \profilesection{Technical Skills}{1.2cm}
+    \vspace{4mm}
+    \profilesection{Skills}{4cm}
     
-    {\large \textbf{Overview}}
+    {\large \textbf{Languages}}
 
-	\skills
+        \skillsbar
         
         %------------------------------------------------
         
@@ -255,10 +260,10 @@
 
 		 \programming
          
-        \vspace{3mm}
-        \profilesection{Education}{3cm} 
+        \vspace{4mm}
+        \profilesection{Side Projects}{1.5cm}
         
-        \education
+        \projects
       
   \end{textblock}
 }
@@ -286,7 +291,7 @@
 		\LARGE\headingfont\color{headercolor}%
 		\@sectioncolor #1%
 	}
-  \par\vspace{1mm}
+  \par\vspace{\parskip}
 }
 
 \renewcommand{\subsection}[1]{
@@ -313,7 +318,7 @@
 
 % \newcommand{\twentyitem}[5]{%
 % 	#1&\parbox[t]{0.83\textwidth}{%
-% 		\textbf{#2}% 
+% 		\textbf{#2}%
 % 		\hfill%
 % 		{\footnotesize#3}\\%
 %         \ifblank{#4}{}{#4 \\}
@@ -323,7 +328,7 @@
 
 \newcommand{\twentyitem}[6]{%
 	#1&\parbox[t]{0.83\textwidth}{%
-		\textbf{#3}% 
+		\textbf{#3}%
 		\hfill%
 		{\footnotesize#4}%
         }\\%
@@ -357,27 +362,4 @@
 %----------------------------------------------------------------------------------------
 
 \RequirePackage[left=7.6cm,top=0.1cm,right=1cm,bottom=0.1cm,nohead,nofoot]{geometry}
-
-
-\usepackage{smartdiagram}
-\smartdiagramset{
-    bubble center node font = \footnotesize,
-    bubble node font = \footnotesize,
-    % specifies the minimum size of the bubble center node
-    bubble center node size = 0.5cm,
-    %  specifies the minimum size of the bubbles
-    bubble node size = 0.5cm,
-    % specifies which is the distance among the bubble center node and the other bubbles
-    distance center/other bubbles = 0.3cm,
-    % sets the distance from the text to the border of the bubble center node
-    distance text center bubble = 0.5cm,
-    % set center bubble color
-    bubble center node color = pblue,
-    % define the list of colors usable in the diagram
-    set color list = {lightgray, materialcyan, orange, green, materialorange, materialteal, materialamber, materialindigo, materialgreen, materiallime},
-    % sets the opacity at which the bubbles are shown
-    bubble fill opacity = 0.6,
-    % sets the opacity at which the bubble text is shown
-    bubble text opacity = 1,
-}
 
